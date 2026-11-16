@@ -54,8 +54,8 @@ export default function Landing() {
               </Link>
             </div>
             <div className="mt-5 flex items-center gap-2 text-sm font-semibold text-slate-500">
-              <Check className="text-teal" size={17} /> No real bitcoin needed
-              to practice
+              <Check className="text-teal" size={17} /> Your bitcoin stays in
+              your control
             </div>
           </motion.div>
 
@@ -75,6 +75,33 @@ export default function Landing() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 pb-6 sm:px-7">
+        <div className="mx-auto grid max-w-[1100px] gap-4 md:grid-cols-2">
+          <div className="soft-card">
+            <div className="eyebrow">The problem</div>
+            <h2 className="mt-3 text-xl font-bold text-navy">
+              One lost key can lock a family out.
+            </h2>
+            <p className="mt-2 leading-7 text-slate-600">
+              When a spouse dies or a key goes missing, families, can lose
+              access to bitcoin they depended on. Most guides written are
+              complex reducing chances for recovering the funds.
+            </p>
+          </div>
+          <div className="soft-card">
+            <div className="eyebrow">The solution</div>
+            <h2 className="mt-3 text-xl font-bold text-navy">
+              Three keys. Any two open the vault.
+            </h2>
+            <p className="mt-2 leading-7 text-slate-600">
+              Family Vault builds a shared 2-of-3 vault and a plain-language
+              recovery plan, so nobody is locked out and nobody holds all the
+              power.
+            </p>
           </div>
         </div>
       </section>
@@ -118,17 +145,17 @@ export default function Landing() {
               Start safely
             </div>
             <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-              Practice with test bitcoin first.
+              No need to worry family-vault got you covered.
             </h2>
             <p className="mt-2 max-w-xl text-white/65">
-              Walk through every step before you ever use real funds.
+              Walk through every step.
             </p>
           </div>
           <Link
             to="/setup"
             className="btn btn-primary w-full shrink-0 md:w-auto"
           >
-            Build my test vault
+            Build vault
           </Link>
         </div>
       </section>
