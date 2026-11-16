@@ -63,7 +63,7 @@ export default function Dashboard() {
       <PageHeader
         eyebrow="Your family vault"
         title="Everything is safe and ready."
-        description="This practice vault uses test bitcoin only."
+        description="This vault uses bitcoin."
       />
 
       <div className="grid gap-5 lg:grid-cols-[1.35fr_.65fr]">

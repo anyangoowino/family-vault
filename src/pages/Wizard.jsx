@@ -90,10 +90,7 @@ export default function Wizard() {
           <h1 className="mt-4 text-3xl font-bold tracking-tight text-navy">
             Your family vault is ready.
           </h1>
-          <p className="mt-3 leading-7 text-slate-600">
-            No real bitcoin was used. Explore the dashboard, then practice a
-            recovery together.
-          </p>
+          <p className="mt-3 leading-7 text-slate-600">Recovery .</p>
           <Link to="/dashboard" className="btn btn-primary mt-7">
             Open my vault
           </Link>
@@ -147,11 +144,7 @@ export default function Wizard() {
 
           {step === 1 && (
             <div className="mt-6 rounded-2xl bg-navy/4 p-5">
-              {[
-                "About 5 minutes",
-                "No real funds needed",
-                "Nothing private is stored",
-              ].map((item) => (
+              {["About 5 minutes", "Nothing private is stored"].map((item) => (
                 <div
                   key={item}
                   className="flex min-h-9 items-center gap-3 text-sm font-semibold text-navy"
@@ -175,7 +168,6 @@ export default function Wizard() {
               <KeyChoice
                 icon={KeyRound}
                 title="Use a test key"
-                subtitle="Best for your first practice"
                 selected={keys.key1?.option === "test"}
                 onClick={() => choose("key1", "test")}
               />
@@ -186,7 +178,7 @@ export default function Wizard() {
             <div className="mt-6 grid gap-3">
               <KeyChoice
                 icon={UserRound}
-                title="Family member’s test key"
+                title="Family member’s key"
                 subtitle="For a partner, sister, or trusted person"
                 selected={keys.key2?.option === "family"}
                 onClick={() => choose("key2", "family")}
@@ -205,8 +197,8 @@ export default function Wizard() {
             <div className="mt-6 grid gap-3">
               <KeyChoice
                 icon={KeyRound}
-                title="Create backup test key"
-                subtitle="Practice storing it separately"
+                title="Create backup  key"
+                subtitle="Storing it separately"
                 selected={keys.key3?.option === "backup"}
                 onClick={() => choose("key3", "backup")}
               />

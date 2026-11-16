@@ -100,7 +100,7 @@ export default function Learn() {
       </div>
 
       <Link to="/setup" className="btn btn-primary mt-7 sm:w-auto">
-        Try it in test mode
+        Try it.
       </Link>
     </section>
   );

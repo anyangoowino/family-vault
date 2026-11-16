@@ -63,7 +63,7 @@ export default function RecoveryPlan() {
           <input
             id="family"
             className="input mt-2"
-            placeholder="e.g. The Wanjiru family"
+            placeholder="e.g. The Smith family"
             value={plan.familyName || ""}
             onChange={(e) => setFamily(e.target.value)}
           />

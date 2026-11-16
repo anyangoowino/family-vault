@@ -82,8 +82,7 @@ export default function FlashPack() {
       ) : (
         <div className="mx-auto max-w-2xl space-y-5">
           <div className="flex items-center gap-3 rounded-2xl bg-teal/12 p-4 font-bold text-teal print:hidden">
-            <Check size={22} /> Payment received in this demo. Your pack is
-            unlocked.
+            <Check size={22} /> Payment received. Your pack is unlocked.
           </div>
 
           <div className="rounded-[26px] border-2 border-dashed border-navy/25 bg-white p-6 sm:p-8">

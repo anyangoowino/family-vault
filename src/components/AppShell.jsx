@@ -92,7 +92,7 @@ export default function AppShell() {
 
       <footer className="border-t border-navy/8 bg-white pb-20 md:pb-0">
         <div className="mx-auto flex max-w-[1100px] flex-col gap-3 px-5 py-7 text-center text-xs text-slate-500 sm:px-7 md:flex-row md:items-center md:justify-between md:text-left md:text-sm">
-          <span>Family vault. Flash. Trezor.</span>
+          <span>Secure your bitcoin today.</span>
           <div className="flex justify-center gap-6">
             <NavLink to="/flash-pack">Flash pack</NavLink>
             <NavLink to="/settings">Settings</NavLink>

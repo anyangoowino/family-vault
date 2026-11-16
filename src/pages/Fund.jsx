@@ -70,7 +70,7 @@ export default function Fund() {
         {received ? (
           <div className="mt-6 w-full rounded-2xl bg-teal/12 p-5">
             <div className="flex items-center justify-center gap-2 font-bold text-teal">
-              <Check size={20} /> Test funds received
+              <Check size={20} /> Test funds
             </div>
             <p className="mt-1 text-sm text-slate-600">
               {balance.total.toLocaleString()} sats
@@ -100,20 +100,13 @@ export default function Fund() {
             <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal/12 text-xs font-bold text-teal">
               2
             </span>
-            Search for a “signet faucet”, paste the address, and request free
-            test coins.
-          </li>
-          <li className="flex gap-3">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal/12 text-xs font-bold text-teal">
-              3
-            </span>
-            Keep this page open. It updates by itself when the coins arrive.
+            Keep this page open..
           </li>
         </ol>
 
         <div className="mt-5 flex gap-2 rounded-xl bg-amber/12 p-4 text-left text-sm leading-6 text-slate-600">
           <Info className="mt-0.5 shrink-0 text-amber-dark" size={18} />
-          Only send signet test bitcoin. Real bitcoin sent here may be lost.
+          It updates by itself when the coins arrive.
         </div>
       </div>
     </section>
