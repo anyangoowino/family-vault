@@ -37,9 +37,12 @@ export default async function handler(req, res) {
       throw new Error(data.reason || "Flash did not return an invoice.");
 
     res.setHeader("Cache-Control", "no-store");
-    res
-      .status(200)
-      .json({ invoice: data.pr, amount: AMOUNT_SATS, to: ADDRESS });
+    res.status(200).json({
+      invoice: data.pr,
+      verify: data.verify || null,
+      amount: AMOUNT_SATS,
+      to: ADDRESS,
+    });
   } catch (error) {
     res.status(502).json({ error: error.message || "Could not reach Flash." });
   }
