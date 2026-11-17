@@ -9,8 +9,8 @@ import {
 
 const wait = (ms = 650) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// Practice-key secrets live in their own tab storage so Recovery can sign later.
-// These are signet test keys only. Real keys stay on a hardware wallet.
+// Practice-key secrets live in their own tab storage.
+// These are Signet test keys only. Real keys stay on a hardware wallet.
 const SECRETS = "family-vault-test-secrets";
 
 function readSecrets() {
@@ -25,7 +25,7 @@ function writeSecrets(map) {
   try {
     sessionStorage.setItem(SECRETS, JSON.stringify(map));
   } catch {
-    // storage can be unavailable
+    // Storage can be unavailable.
   }
 }
 
@@ -33,16 +33,22 @@ export function clearTestSecrets() {
   try {
     sessionStorage.removeItem(SECRETS);
   } catch {
-    // nothing to clear
+    // Nothing to clear.
   }
 }
 
-export function getTestMnemonic(fingerprint) {
+// Accept either a fingerprint or a full test key ID.
+export function getTestMnemonic(fingerprintOrId) {
+  const fingerprint = String(fingerprintOrId ?? "")
+    .trim()
+    .replace(/^test-/, "");
+
   return readSecrets()[fingerprint] || null;
 }
 
 export async function connectTrezor() {
   await wait(400);
+
   throw new Error(
     "Trezor support turns on once a device is connected. Use a test key for now.",
   );
@@ -56,7 +62,9 @@ const names = {
 
 export async function createTestKey(owner = "You") {
   await wait(300);
+
   const key = generateTestKey();
+
   return {
     id: `test-${key.fingerprint}`,
     label: `${names[owner] || `${owner} test key`} · ${key.fingerprint}`,
@@ -68,41 +76,62 @@ export async function createTestKey(owner = "You") {
 
 export async function createVault(keys) {
   await wait(500);
-  if (keys.length !== 3 || keys.some((k) => !k?.xpub)) {
+
+  if (
+    !keys ||
+    keys.length !== 3 ||
+    keys.some((k) => !k?.xpub || !k?.fingerprint)
+  ) {
     throw new Error("All three keys are needed to create the vault.");
   }
+
   const { address } = vaultFromXpubs(keys.map((k) => k.xpub));
 
+  // Keep private practice phrases separate from public vault information.
   const secrets = {};
+
   keys.forEach((k) => {
-    if (k.mnemonic) secrets[k.fingerprint] = k.mnemonic;
+    if (k.mnemonic) {
+      secrets[k.fingerprint] = k.mnemonic;
+    }
   });
+
   writeSecrets(secrets);
 
   return {
     address,
     policy: "2 of 3",
     network: "signet",
-    // public details only: secret words are never put in the vault object
+
+    // Public details only. Never put secret words in the vault object.
     keys: keys.map(({ id, label, fingerprint, xpub, option }) => ({
       id,
       label,
+      fingerprint,
       xpub,
       option,
     })),
   };
 }
 
-// Balance in satoshis, split into confirmed and still-pending.
+// Balance in satoshis, split into confirmed and pending.
 export async function getBalance(address) {
   const utxos = await getUtxos(address);
+
   const sum = (list) => list.reduce((total, u) => total + u.value, 0);
+
   const confirmed = sum(utxos.filter((u) => u.status?.confirmed));
+
   const pending = sum(utxos.filter((u) => !u.status?.confirmed));
-  return { confirmed, pending, total: confirmed + pending };
+
+  return {
+    confirmed,
+    pending,
+    total: confirmed + pending,
+  };
 }
 
-// A new address from the same vault (index 1), handy for demo destinations.
+// A new address from the same vault (index 1).
 export function getFreshAddress(vault) {
   return vaultFromXpubs(
     vault.keys.map((k) => k.xpub),
@@ -110,24 +139,33 @@ export function getFreshAddress(vault) {
   ).address;
 }
 
-// Real recovery: sign with two keys, then broadcast to signet.
+// Sign with two keys, then broadcast to Signet.
 export async function recoverFunds({ vault, fingerprints, destination }) {
-  if (fingerprints.length !== 2)
+  if (
+    !vault?.keys ||
+    !Array.isArray(fingerprints) ||
+    fingerprints.length !== 2
+  ) {
     throw new Error("Choose exactly two keys to continue.");
+  }
+
   if (!isValidAddress(destination)) {
     throw new Error(
-      "That doesn’t look like a valid signet address. It should start with tb1.",
+      "That doesn't look like a valid Signet address. It should start with tb1.",
     );
   }
 
+  // This now accepts both test-46F20CC9 and 46F20CC9.
   const mnemonics = fingerprints.map(getTestMnemonic);
+
   if (mnemonics.some((m) => !m)) {
     throw new Error(
-      "These practice keys aren’t available here. They only work in the tab where the vault was created.",
+      "These practice keys aren't available here. They only work in the tab where the vault was created.",
     );
   }
 
   const utxos = await getUtxos(vault.address);
+
   if (!utxos.length) {
     throw new Error(
       "The vault has no test funds yet. Add some on the Fund page first.",
@@ -140,11 +178,13 @@ export async function recoverFunds({ vault, fingerprints, destination }) {
     utxos,
     destination: destination.trim(),
   });
+
   const txid = await broadcast(signed.hex);
+
   return {
     txid: txid || signed.txid,
     amount: signed.amount,
     fee: signed.fee,
-    destination,
+    destination: destination.trim(),
   };
 }
