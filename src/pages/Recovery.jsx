@@ -5,6 +5,7 @@ import {
   KeyRound,
   Wallet,
   X,
+  Zap,
 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
@@ -75,7 +76,7 @@ export default function Recovery() {
       <PageHeader
         eyebrow="Guided recovery"
         title="Bring any two keys together."
-        description="Choose the two keys you have. When both are ready, the vault opens and you can choose where your test funds go."
+        description="Choose the two keys you have. When both are ready, the vault opens and you can choose where your funds go."
       />
 
       <div className="grid gap-6 lg:grid-cols-[.9fr_1.1fr]">
@@ -127,11 +128,11 @@ export default function Recovery() {
               onClick={fillFreshAddress}
               className="btn btn-secondary mt-3"
             >
-              <Wallet size={18} /> Use a fresh practice address
+              <Wallet size={18} /> Use a fresh vault address
             </button>
             <p className="mt-2 text-xs leading-5 text-slate-500">
-              The practice address belongs to this same vault, so it’s safe for
-              a demo.
+              A fresh address from this same vault is the quickest way to
+              rehearse a recovery.
             </p>
 
             {error && (
@@ -182,7 +183,10 @@ export default function Recovery() {
               <ExternalLink size={16} className="shrink-0" />
               View it on the signet explorer
             </a>
-            <Link to="/dashboard" className="btn btn-primary mt-4">
+            <Link to="/flash-pack" className="btn btn-secondary mt-4">
+              <Zap size={18} /> Get the Family Recovery Pack
+            </Link>
+            <Link to="/dashboard" className="btn btn-primary mt-3">
               Return to vault
             </Link>
           </div>

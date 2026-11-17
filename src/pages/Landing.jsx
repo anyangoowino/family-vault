@@ -13,7 +13,7 @@ const steps = [
   {
     icon: ShieldCheck,
     title: "Any two can unlock it",
-    text: "No single lost key can put your family’s bitcoin at risk.",
+    text: "A single lost key never locks your family out, and no one person can move the funds alone.",
   },
   {
     icon: HeartHandshake,
@@ -43,11 +43,11 @@ export default function Landing() {
             </h1>
             <p className="mt-5 max-w-lg text-[17px] leading-7 text-slate-600 sm:text-lg">
               Create a shared family vault and a recovery plan your loved ones
-              can actually follow—without giving up control.
+              can actually follow, without giving up control.
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <Link to="/setup" className="btn btn-primary sm:w-auto">
-                Create a test vault
+                Create your vault
               </Link>
               <Link to="/learn" className="btn btn-secondary sm:w-auto">
                 See how it works
@@ -71,7 +71,7 @@ export default function Landing() {
                   You stay in control
                 </div>
                 <div className="text-xs text-slate-500">
-                  Your keys never leave your hands
+                  Your keys never leave your device
                 </div>
               </div>
             </div>
@@ -87,9 +87,9 @@ export default function Landing() {
               One lost key can lock a family out.
             </h2>
             <p className="mt-2 leading-7 text-slate-600">
-              When a spouse dies or a key goes missing, families, can lose
-              access to bitcoin they depended on. Most guides written are
-              complex reducing chances for recovering the funds.
+              When a spouse dies or a key goes missing, families can lose access
+              to the bitcoin they depended on. Most recovery guides are too
+              technical to follow in a crisis.
             </p>
           </div>
           <div className="soft-card">
@@ -142,20 +142,20 @@ export default function Landing() {
         <div className="mx-auto flex max-w-[1100px] flex-col items-start justify-between gap-6 rounded-[30px] bg-navy p-7 text-white sm:p-10 md:flex-row md:items-center">
           <div>
             <div className="text-sm font-bold uppercase tracking-[.14em] text-teal-light">
-              Start safely
+              Ready when you are
             </div>
             <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-              No need to worry family-vault got you covered.
+              Build your family vault in five minutes.
             </h2>
             <p className="mt-2 max-w-xl text-white/65">
-              Walk through every step.
+              A guided setup takes you through every step.
             </p>
           </div>
           <Link
             to="/setup"
             className="btn btn-primary w-full shrink-0 md:w-auto"
           >
-            Build vault
+            Build my vault
           </Link>
         </div>
       </section>

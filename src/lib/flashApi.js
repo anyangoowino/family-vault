@@ -1,16 +1,13 @@
-const wait = (ms = 650) => new Promise((resolve) => setTimeout(resolve, ms));
+export const FLASH_ADDRESS = "hao@flashapp.me";
 
-export async function createLightningInvoice(amount = 21) {
-  await wait(500);
-  return { invoice: `lnbc${amount}n1familyvaultflashpack`, amount };
-}
-
-export async function payWithFlash(invoice) {
-  await wait(800);
-  return { paid: true, invoice, receipt: "flash-receipt-021" };
-}
-
-export async function getFlashWalletAddress() {
-  await wait(400);
-  return { address: "bc1qflash8family2wallet4safe9home" };
+// Asks our small server function for a real Lightning invoice from Flash.
+export async function createLightningInvoice() {
+  const response = await fetch("/api/invoice");
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok || !data.invoice) {
+    throw new Error(
+      data.error || "We couldn’t get a payment request from Flash.",
+    );
+  }
+  return data;
 }

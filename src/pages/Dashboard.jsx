@@ -6,6 +6,7 @@ import {
   KeyRound,
   RefreshCw,
   ShieldCheck,
+  Zap,
 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router";
@@ -62,14 +63,14 @@ export default function Dashboard() {
     <section className="page-wrap">
       <PageHeader
         eyebrow="Your family vault"
-        title="Everything is safe and ready."
-        description="This vault uses bitcoin."
+        title="Your family vault is ready."
+        description="Any two of your three keys can open it."
       />
 
       <div className="grid gap-5 lg:grid-cols-[1.35fr_.65fr]">
         <div className="overflow-hidden rounded-[28px] bg-gradient-to-br from-navy to-[#1d6171] p-6 text-white shadow-xl shadow-navy/10 sm:p-8">
           <div className="flex items-center justify-between">
-            <span className="badge badge-dark">Signet • Test mode</span>
+            <span className="badge badge-dark">Bitcoin signet</span>
             <button
               onClick={refresh}
               className="icon-button text-white hover:bg-white/10"
@@ -89,7 +90,7 @@ export default function Dashboard() {
                 ? balanceError
                 : balance?.pending > 0
                   ? `${balance.pending.toLocaleString()} sats waiting for confirmation`
-                  : "Test funds • no real-world value"}
+                  : "Bitcoin signet network"}
           </div>
           <div className="mt-8 flex gap-3">
             <Link
@@ -144,7 +145,7 @@ export default function Dashboard() {
             </div>
             <div className="min-w-0 flex-1">
               <div className="font-bold text-navy">
-                {funded ? "Test funds received" : "Waiting for test funds"}
+                {funded ? "Deposit received" : "Waiting for a deposit"}
               </div>
               <div className="text-sm text-slate-500">
                 {funded
@@ -180,6 +181,22 @@ export default function Dashboard() {
           </Link>
         </div>
       </div>
+
+      <Link
+        to="/flash-pack"
+        className="glass-card mt-5 flex items-center gap-4"
+      >
+        <div className="icon-tile">
+          <Zap size={22} />
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="font-bold text-navy">Family Recovery Pack</div>
+          <div className="text-sm text-slate-500">
+            Emergency card and yearly checklist, unlocked with Flash
+          </div>
+        </div>
+        <ArrowUpRight size={18} className="text-slate-400" />
+      </Link>
     </section>
   );
 }
