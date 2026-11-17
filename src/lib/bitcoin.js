@@ -5,7 +5,6 @@ import { wordlist } from "@scure/bip39/wordlists/english.js";
 
 const NETWORK = btc.TEST_NETWORK; // signet uses the same address format as testnet
 const ACCOUNT_PATH = "m/48'/1'/0'/2'"; // multisig, native segwit, test networks
-const API = "https://mempool.space/signet/api";
 
 const toHex = (bytes) =>
   Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
@@ -85,19 +84,26 @@ export function signRecovery({
   };
 }
 
+// Coins in the vault. This calls our own server function (api/utxo.js),
+// which asks the signet explorer for us, so it works on any connection.
 export async function getUtxos(address) {
-  const res = await fetch(`${API}/address/${address}/utxo`);
+  const res = await fetch(`/api/utxo?address=${encodeURIComponent(address)}`);
   if (!res.ok)
     throw new Error("Couldn’t check the vault balance. Please try again.");
   return res.json();
 }
 
+// Sends the signed transaction through our server function (api/broadcast.js).
 export async function broadcast(hex) {
-  const res = await fetch(`${API}/tx`, { method: "POST", body: hex });
-  const text = await res.text();
+  const res = await fetch("/api/broadcast", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ hex }),
+  });
+  const data = await res.json().catch(() => ({}));
   if (!res.ok)
-    throw new Error(text || "The network rejected this transaction.");
-  return text;
+    throw new Error(data.error || "The network rejected this transaction.");
+  return data.txid;
 }
 
 export function isValidAddress(address) {

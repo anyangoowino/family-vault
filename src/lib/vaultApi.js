@@ -87,7 +87,6 @@ export async function createVault(keys) {
     keys: keys.map(({ id, label, fingerprint, xpub, option }) => ({
       id,
       label,
-      fingerprint,
       xpub,
       option,
     })),
